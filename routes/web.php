@@ -26,7 +26,7 @@ use App\Http\Controllers\Admin\PermissionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('admin.dashboard');
 });
 
 Auth::routes();
