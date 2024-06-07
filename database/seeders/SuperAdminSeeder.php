@@ -29,53 +29,5 @@ class SuperAdminSeeder extends Seeder
             'password' => Hash::make('ismail1234')
         ]);
         $admin->assignRole('Admin');
-
-        $doctors = [
-            [
-                'name' => 'Dr. Ahmet Yılmaz',
-                'email' => 'ahmetyilmaz@test.com',
-                'password' => Hash::make('ahmet1234')
-            ],
-            [
-                'name' => 'Dr. Mehmet Yılmaz',
-                'email' => 'mehmetyilmaz@test.com',
-                'password' => Hash::make('mehmet1234')
-            ],
-            [
-                'name' => 'Dr. Ayşe Yılmaz',
-                'email' => 'ayseyilmaz@gmail.com',
-                'password' => Hash::make('ayse1234')
-            ]
-        ];
-
-        // Creating Doctor User
-        foreach ($doctors as $doctor) {
-            $doctor = User::create($doctor);
-            $doctor->assignRole('Doctor');
-        }
-
-        // Creating Anaesthetist User
-        $anaesthetists = [
-            [
-                'name' => 'Dr. Şevket Yılmaz',
-                'email' => 'sevket@yilmaz.com.tr',
-                'password' => Hash::make('sevket1234')
-            ],
-            [
-                'name' => 'Dr. Hüseyin Yılmaz',
-                'email' => 'huseyin@yilmaz.com.tr',
-                'password' => Hash::make('huseyin1234')
-            ],
-            [
-                'name' => 'Dr. Can Yılmaz',
-                'email' => 'can@yilmaz.com.tr',
-                'password' => Hash::make('mehmet1234')
-            ]
-        ];
-
-        foreach ($anaesthetists as $anaesthetist) {
-            $anaesthetist = User::create($anaesthetist);
-            $anaesthetist->assignRole('Anaesthetist');
-        }
     }
 }

@@ -98,134 +98,33 @@
                             </a>
                         </li>
 
-                        @can('view-inquires')
+                        @hasanyrole('Super Admin|Admin')
 
-                            <li class="menu-title">Inquires</li>
+                            <li class="menu-title">{{ __('Stock Management') }}</li>
 
                             <li class="menu-item">
-                                <a href="#menuInquires" data-bs-toggle="collapse" class="menu-link">
-                                    <span class="menu-icon"><i data-feather="briefcase"></i></span>
-                                    <span class="menu-text"> {{ __('Inquires')  }}</span>
+                                <a href="#menuStock" data-bs-toggle="collapse" class="menu-link">
+                                    <span class="menu-icon"><i data-feather="box"></i></span>
+                                    <span class="menu-text"> {{ __('Stock')  }}</span>
                                     <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="menuInquires">
+                                <div class="collapse" id="menuStock">
                                     <ul class="sub-menu">
                                         <li class="menu-item">
-                                            <a href="{{ route('admin.inquiries.waiting') }}" class="menu-link">
-                                                <span class="menu-text">{{ __('Waiting Inquiries') }}</span>
+                                            <a href="" class="menu-link">
+                                                <span class="menu-text">{{ __('Stocks') }}</span>
                                             </a>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="{{ route('admin.inquiries.approved') }}" class="menu-link">
-                                                <span class="menu-text">{{ __('Approved Inquires') }}</span>
+                                            <a href="" class="menu-link">
+                                                <span class="menu-text">{{ __('Add Stock') }}</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
 
-                        @endcan
-
-                        @hasanyrole('Super Admin|Admin')
-
                             <li class="menu-title">{{ __('Settings') }}</li>
-
-                            @can('view-hospital')
-                                <li class="menu-item">
-                                    <a href="#menuHospitals" data-bs-toggle="collapse" class="menu-link">
-                                        <span class="menu-icon"><i data-feather="briefcase"></i></span>
-                                        <span class="menu-text"> {{ __('Hospitals')  }}</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="menuHospitals">
-                                        <ul class="sub-menu">
-                                            <li class="menu-item">
-                                                <a href="{{ route('admin.hospitals.index') }}" class="menu-link">
-                                                    <span class="menu-text">{{ __('Hospitals') }}</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item">
-                                                <a href="{{ route('admin.hospitals.create') }}" class="menu-link">
-                                                    <span class="menu-text">{{ __('Add Hospital') }}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcan
-
-
-                            @can('view-treatments')
-                                <li class="menu-item">
-                                    <a href="#menuTreatments" data-bs-toggle="collapse" class="menu-link">
-                                        <span class="menu-icon"><i data-feather="briefcase"></i></span>
-                                        <span class="menu-text"> {{ __('Treatments')  }}</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="menuTreatments">
-                                        <ul class="sub-menu">
-                                            <li class="menu-item">
-                                                <a href="{{ route('admin.treatments.index') }}" class="menu-link">
-                                                    <span class="menu-text">{{ __('Treatments') }}</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item">
-                                                <a href="{{ route('admin.treatments.create') }}" class="menu-link">
-                                                    <span class="menu-text">{{ __('Add Treatment') }}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcan
-
-                            @can('view-statuses')
-                                <li class="menu-item">
-                                    <a href="#menuStatuses" data-bs-toggle="collapse" class="menu-link">
-                                        <span class="menu-icon"><i data-feather="briefcase"></i></span>
-                                        <span class="menu-text"> {{ __('Statuses')  }}</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="menuStatuses">
-                                        <ul class="sub-menu">
-                                            <li class="menu-item">
-                                                <a href="{{ route('admin.status.index') }}" class="menu-link">
-                                                    <span class="menu-text">{{ __('Statuses') }}</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item">
-                                                <a href="{{ route('admin.status.create') }}" class="menu-link">
-                                                    <span class="menu-text">{{ __('Add Status') }}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcan
-
-                            @can('view-medical-forms')
-                                <li class="menu-item">
-                                    <a href="#menuMedicalForms" data-bs-toggle="collapse" class="menu-link">
-                                        <span class="menu-icon"><i data-feather="briefcase"></i></span>
-                                        <span class="menu-text"> {{ __('Medical Forms')  }}</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="menuMedicalForms">
-                                        <ul class="sub-menu">
-                                            <li class="menu-item">
-                                                <a href="{{ route('admin.medical-forms.index') }}" class="menu-link">
-                                                    <span class="menu-text">{{ __('Medical Forms') }}</span>
-                                                </a>
-                                            </li>
-                                            <li class="menu-item">
-                                                <a href="{{ route('admin.medical-forms.create') }}" class="menu-link">
-                                                    <span class="menu-text">{{ __('Add Medical Form') }}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcan
 
                             <li class="menu-item">
                                 <a href="#menuUsers" data-bs-toggle="collapse" class="menu-link">
