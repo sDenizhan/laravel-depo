@@ -1,13 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\DoctorController;
-use App\Http\Controllers\Admin\HospitalController;
-use App\Http\Controllers\Admin\InquiryController;
-use App\Http\Controllers\Admin\LanguageController;
-use App\Http\Controllers\Admin\MedicalFormController;
-use App\Http\Controllers\Admin\MedicalFormQuestionController;
-use App\Http\Controllers\Admin\StatusController;
-use App\Http\Controllers\Admin\TreatmentController;
+use App\Http\Controllers\Admin\RepoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
@@ -39,6 +32,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resources([
         'roles' => RoleController::class,
         'users' => UserController::class,
-        'permissions' => PermissionController::class
+        'permissions' => PermissionController::class,
+        'repos' => RepoController::class,
     ]);
 });

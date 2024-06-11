@@ -4,8 +4,8 @@
     @php
         $data = [
             [
-                'title' => __('Hospital'),
-                'url' => route('admin.hospitals.index')
+                'title' => __('Repositories'),
+                'url' => route('admin.repos.index')
             ],
             [
                 'title' => __('Index'),
@@ -13,17 +13,21 @@
             ]
         ];
     @endphp
-    <x-backend.breadcrumbs title="{{ __('Hospital') }}" :links="$data" />
+    <x-backend.breadcrumbs title="{{ __('Repositories') }}" :links="$data" />
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-12">
+        <div class="alert alert-info">
+            <h4 class="alert-heading">{{ __('Warning') }}</h4>
+            <p>{{ __('You can add just once Main Repo!') }}</p>
+        </div>
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-pills card-header-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.hospitals.create') }}">{{ __('Add New') }}</a>
+                        <a class="nav-link active" href="{{ route('admin.repos.create') }}">{{ __('Add New') }}</a>
                     </li>
                 </ul>
             </div>
@@ -32,26 +36,26 @@
                     <thead>
                         <tr>
                             <th>{{ __('Name') }}</th>
-                            <th>{{ __('Status') }}</th>
-                            <th>{{ __('Doctor Count') }}</th>
+                            <th>{{ __('Is Main?') }}</th>
+                            <th>{{ __('Min. Alert Count') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($hospitals as $hospital)
+                        @foreach ($repos as $repo)
                             <tr>
-                                <td>{{ $hospital->name }}</td>
-                                <td>{{ \App\Enums\Status::from($hospital->status)->name }}</td>
-                                <td>{{ $hospital->users->count() ?? '0' }}</td>
+                                <td>{{ $repo->name }}</td>
+                                <td>{{ $repo->is_main ? __('Yes') : __('No') }}</td>
+                                <td>{{ $repo->min_alert }}</td>
                                 <td>
-                                    <form action="{{ route('admin.hospitals.destroy', $hospital->id) }}" method="post">
+                                    <form action="{{ route('admin.repos.destroy', $repo->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
 
-                                        <a href="{{ route('admin.hospitals.show', $hospital->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('admin.hospitals.edit', $hospital->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('admin.repos.show', $repo->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('admin.repos.edit', $repo->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
 
-                                        @can('delete-hospitals')
+                                        @can('delete-repo')
                                             <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-recycle"></i></button>
                                         @endcan
                                     </form>
