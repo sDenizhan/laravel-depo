@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('barcode')->nullable();
             $table->decimal('price', 10, 2);
             $table->text('currency')->default(\App\Enums\Currency::toArray()->first());
+            $table->text('image')->nullable();
+            $table->text('brand')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
