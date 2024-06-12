@@ -4,8 +4,8 @@
     @php
         $data = [
             [
-                'title' => __('Statuses'),
-                'url' => route('admin.status.index')
+                'title' => __('Product Categories'),
+                'url' => route('admin.product-categories.index')
             ],
             [
                 'title' => __('Index'),
@@ -13,7 +13,7 @@
             ]
         ];
     @endphp
-    <x-backend.breadcrumbs title="{{ __('Statuses') }}" :links="$data" />
+    <x-backend.breadcrumbs title="{{ __('Product Categories') }}" :links="$data" />
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
             <div class="card-header">
                 <ul class="nav nav-pills card-header-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.status.create') }}">{{ __('Add New') }}</a>
+                        <a class="nav-link active" href="{{ route('admin.product-categories.create') }}">{{ __('Add New') }}</a>
                     </li>
                 </ul>
             </div>
@@ -32,26 +32,19 @@
                     <thead>
                         <tr>
                             <th>{{ __('Name') }}</th>
-                            <th>{{ __('Section') }}</th>
+                            <th>{{ __('Use For Medicine?') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($statuses as $status)
+                        @foreach ($categories as $category)
                             <tr>
-                                <td>{{ $status->name }}</td>
-                                <td>{{ $status->section }}</td>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->use_for_prescription  == 1 ? __('Yes') : __('No') }}</td>
                                 <td>
-
-                                    @can('delete-permission')
-                                        <form action="{{ route('admin.status.destroy', $status->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <a href="{{ route('admin.status.edit', $status->id) }}" class="btn btn-sm btn-primary">Edit</a>
-
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
+                                    <a href="{{ route('admin.product-categories.edit', $category->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    @can('delete-product-category')
+                                        <a href="{{ route('admin.product-categories.destroy', ['product_category' => $category->id]) }}" class="btn btn-danger btn-sm remove_button">Delete</a>
                                     @endcan
                                 </td>
                             </tr>
@@ -70,6 +63,8 @@
  <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
  <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
  <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+
+ <link href="{{ asset('themes/backend/default/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
  <!-- third party css end -->
 @endpush
 
@@ -89,7 +84,56 @@
     <script src=" {{ asset('themes/backend/default/assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src=" {{ asset('themes/backend/default/assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <!-- third party js ends -->
-
+    <script src="{{ asset('themes/backend/default/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Datatables init -->
     <script src=" {{ asset('themes/backend/default/assets/js/pages/datatables.init.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            //sweet alert remove button
+            $(document).on('click', 'a.remove_button', function(e){
+                e.preventDefault();
+                var url = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: !0,
+                    confirmButtonColor: "#28bb4b",
+                    cancelButtonColor: "#f34e4e",
+                    confirmButtonText: "Yes, delete it!"
+                }).then(function(e) {
+                    if (e.value) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                _method : 'DELETE'
+                            },
+                            success: function(data){
+                                if(data.success){
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Deleted!",
+                                        text: 'the category has been deleted.',
+                                    }).then(function(){
+                                        location.reload();
+                                    });
+                                }else{
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Error!",
+                                        text: 'the category has not been deleted.',
+                                    });
+                                }
+                            }
+                        });
+                    }
+                })
+            });
+
+
+        });
+    </script>
 @endpush

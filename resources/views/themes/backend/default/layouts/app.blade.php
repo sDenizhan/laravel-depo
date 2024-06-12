@@ -103,6 +103,50 @@
                             <li class="menu-title">{{ __('Stock Management') }}</li>
 
                             <li class="menu-item">
+                                <a href="#menuProducts" data-bs-toggle="collapse" class="menu-link">
+                                    <span class="menu-icon"><i data-feather="box"></i></span>
+                                    <span class="menu-text"> {{ __('Products')  }}</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="menuProducts">
+                                    <ul class="sub-menu">
+                                        <li class="menu-item">
+                                            <a href="#" class="menu-link">
+                                                <span class="menu-text">{{ __('Products') }}</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="#" class="menu-link">
+                                                <span class="menu-text">{{ __('Add Product') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="#menuCategories" data-bs-toggle="collapse" class="menu-link">
+                                    <span class="menu-icon"><i data-feather="box"></i></span>
+                                    <span class="menu-text"> {{ __('Categories')  }}</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="menuCategories">
+                                    <ul class="sub-menu">
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.product-categories.index') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Categories') }}</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.product-categories.create') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Add Category') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="menu-item">
                                 <a href="#menuStock" data-bs-toggle="collapse" class="menu-link">
                                     <span class="menu-icon"><i data-feather="box"></i></span>
                                     <span class="menu-text"> {{ __('Stock')  }}</span>

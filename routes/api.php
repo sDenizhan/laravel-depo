@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\InquiryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('inquiries', InquiryController::class)->only(['store']);
+//Route::apiResource('inquiries', InquiryController::class)->only(['store']);
