@@ -36,8 +36,8 @@
                 <div class="logo-box">
                     <!-- Brand Logo Light -->
                     <a href="{{ route('admin.dashboard') }}" class="logo-light">
-                        <img src="{{ asset('themes/backend/default/assets/images/logo-light-2.png')}}" alt="logo" class="logo-lg">
-                        <img src="{{ asset('themes/backend/default/assets/images/logo-sm.png')}}" alt="small logo" class="logo-sm">
+                        <img src="{{ asset('logos/logo-white.png')}}" alt="logo" class="logo-lg" style="height: 50px !important;">
+                        <img src="{{ asset('logos/logo-white.png')}}" alt="small logo" class="logo-sm">
                     </a>
 
                     <!-- Brand Logo Dark -->
@@ -102,6 +102,29 @@
 
                             <li class="menu-title">{{ __('Stock Management') }}</li>
 
+                            <!-- Repo -->
+                            <li class="menu-item">
+                                <a href="#menuRepo" data-bs-toggle="collapse" class="menu-link">
+                                    <span class="menu-icon"><i data-feather="box"></i></span>
+                                    <span class="menu-text"> {{ __('Repo')  }}</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="menuRepo">
+                                    <ul class="sub-menu">
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.repos.index') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Repo') }}</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.repos.create') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Add Repo') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
                             <li class="menu-item">
                                 <a href="#menuProducts" data-bs-toggle="collapse" class="menu-link">
                                     <span class="menu-icon"><i data-feather="box"></i></span>
@@ -140,28 +163,6 @@
                                         <li class="menu-item">
                                             <a href="{{ route('admin.product-categories.create') }}" class="menu-link">
                                                 <span class="menu-text">{{ __('Add Category') }}</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            <li class="menu-item">
-                                <a href="#menuStock" data-bs-toggle="collapse" class="menu-link">
-                                    <span class="menu-icon"><i data-feather="box"></i></span>
-                                    <span class="menu-text"> {{ __('Stock')  }}</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="menuStock">
-                                    <ul class="sub-menu">
-                                        <li class="menu-item">
-                                            <a href="" class="menu-link">
-                                                <span class="menu-text">{{ __('Stocks') }}</span>
-                                            </a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="" class="menu-link">
-                                                <span class="menu-text">{{ __('Add Stock') }}</span>
                                             </a>
                                         </li>
                                     </ul>

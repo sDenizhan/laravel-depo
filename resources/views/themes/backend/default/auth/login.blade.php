@@ -7,15 +7,15 @@
 
             <div class="auth-brand text-center text-lg-start">
                 <div class="auth-brand">
-                    <a href="index.html" class="logo logo-dark text-center">
+                    <a href="{{ url('/') }}" class="logo logo-dark text-center">
                         <span class="logo-lg">
-                            <img src="{{ asset('themes/backend/default/assets/images/logo-dark.png') }}" alt="" height="22">
+                            <img src="{{ asset('logos/logo-dark.png') }}" alt="" height="75">
                         </span>
                     </a>
 
-                    <a href="index.html" class="logo logo-light text-center">
+                    <a href="{{ url('/') }}" class="logo logo-light text-center">
                         <span class="logo-lg">
-                            <img src="{{ asset('themes/backend/default/assets/images/logo-light.png') }}" alt="" height="22">
+                            <img src="{{ asset('logos/logo-white.png') }}" alt="" height="75">
                         </span>
                     </a>
                 </div>
@@ -51,7 +51,7 @@
                         @enderror
                     </div>
                 </div>
-                
+
                 <div class="text-center d-grid">
                     <button class="btn btn-primary" type="submit">
                         {{ __('Login') }}
