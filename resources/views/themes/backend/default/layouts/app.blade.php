@@ -111,12 +111,12 @@
                                 <div class="collapse" id="menuProducts">
                                     <ul class="sub-menu">
                                         <li class="menu-item">
-                                            <a href="#" class="menu-link">
+                                            <a href="{{ route('admin.products.index') }}" class="menu-link">
                                                 <span class="menu-text">{{ __('Products') }}</span>
                                             </a>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="#" class="menu-link">
+                                            <a href="{{ route('admin.products.create') }}" class="menu-link">
                                                 <span class="menu-text">{{ __('Add Product') }}</span>
                                             </a>
                                         </li>

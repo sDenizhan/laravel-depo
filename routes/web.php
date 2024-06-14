@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ProductCategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RepoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -36,5 +37,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         'permissions' => PermissionController::class,
         'repos' => RepoController::class,
         'product-categories' => ProductCategoryController::class,
+        'products' => ProductController::class,
     ]);
 });

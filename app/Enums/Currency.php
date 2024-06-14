@@ -1,14 +1,14 @@
 <?php
 namespace App\Enums;
 
-enum Currency
+enum Currency: int
 {
-    const USD = 1;
-    const EUR = 2;
-    const GBP = 3;
-    const TRY = 4;
+    case USD = 1;
+    case EUR = 2;
+    case GBP = 3;
+    case TRY = 4;
 
-    public static function toArray(): \Illuminate\Support\Collection
+    public static function toArray()
     {
         return collect(self::cases())->mapWithKeys(fn($value, $key) => [$key => $value]);
     }
