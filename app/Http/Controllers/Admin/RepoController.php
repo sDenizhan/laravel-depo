@@ -30,6 +30,8 @@ class RepoController extends Controller
 
     public function show($id)
     {
+        $repo = Repo::findOrFail($id);
+        return view('repos.show', compact('repo'));
     }
 
     public function edit($id)

@@ -14,4 +14,11 @@ class Product extends Model
     {
         return $this->belongsTo(ProductCategory::class);
     }
+
+    public function repos(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Repo::class, 'repo_has_products')
+            ->withPivot('quantity', 'price', 'currency')
+            ->withTimestamps();
+    }
 }
