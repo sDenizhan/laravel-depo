@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\LogInventoryAdded;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInventoryRequest;
 use App\Models\Repo;
@@ -36,6 +37,7 @@ class InventoryController extends Controller
         $save = RepoHasProducts::create($validated);
 
         if ( $save ) {
+            event(new LogInventoryAdded($save));
             return redirect()->route('admin.inventory.index')->with('success', 'Product added to inventory successfully.');
         } else {
             return redirect()->route('admin.inventory.index')->with('error', 'Failed to add product to inventory.');

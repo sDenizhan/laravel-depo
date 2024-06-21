@@ -84,7 +84,6 @@
                                 <th scope="col">{{ __('Category') }}</th>
                                 <th scope="col">{{ __('Quantity') }}</th>
                                 <th scope="col">{{ __('Price') }}</th>
-                                <th scope="col">{{ __('Actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -95,12 +94,44 @@
                                     <td>{{ $product->category->name }}</td>
                                     <td>{{ $product->pivot->quantity }}</td>
                                     <td>{{ join(' ', [$product->price, \App\Enums\Currency::from($product->currency)->name]) }}</td>
-                                    <td>
-                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ __("Repository Logs") }}</h4>
+                        <div class="table-responsive">
+                            <table class="table table-centered table-nowrap table-hover mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ __("ID") }}</th>
+                                    <th scope="col">{{ __("User") }}</th>
+                                    <th scope="col">{{ __("Action") }}</th>
+                                    <th scope="col">{{ __("Created At") }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($logs as $log)
+                                    <tr>
+                                        <td>{{ $log->id }}</td>
+                                        <td>{{ $log->user->name }}</td>
+                                        <td>{{ $log->action }}</td>
+                                        <td>{{ $log->created_at->diffForHumans() }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

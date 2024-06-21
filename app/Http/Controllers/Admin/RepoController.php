@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRepoRequest;
+use App\Models\Logs;
 use App\Models\Repo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class RepoController extends Controller
     public function show($id)
     {
         $repo = Repo::findOrFail($id);
-        return view('repos.show', compact('repo'));
+        $logs = Logs::where('data->repo_id', $id)->get();
+        return view('repos.show', compact('repo', 'logs'));
     }
 
     public function edit($id)
