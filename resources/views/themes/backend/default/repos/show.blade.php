@@ -78,24 +78,22 @@
                     <div class="table-responsive">
                         <table class="table table-bordered table-centered table-nowrap">
                             <thead>
-                            <tr>
-                                <th scope="col" style="width: 70px;">#</th>
-                                <th scope="col">{{ __('Name') }}</th>
-                                <th scope="col">{{ __('Category') }}</th>
-                                <th scope="col">{{ __('Quantity') }}</th>
-                                <th scope="col">{{ __('Price') }}</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col" style="width: 70px;">#</th>
+                                    <th scope="col">{{ __('Name') }}</th>
+                                    <th scope="col">{{ __('Category') }}</th>
+                                    <th scope="col">{{ __('Quantity') }}</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach ($repo->products as $product)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->category->name }}</td>
-                                    <td>{{ $product->pivot->quantity }}</td>
-                                    <td>{{ join(' ', [$product->price, \App\Enums\Currency::from($product->currency)->name]) }}</td>
-                                </tr>
-                            @endforeach
+                                @foreach ($products as $product)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->category_name }}</td>
+                                        <td>{{ $product->total_quantity }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -112,21 +110,15 @@
                         <h4 class="card-title">{{ __("Repository Logs") }}</h4>
                         <div class="table-responsive">
                             <table class="table table-centered table-nowrap table-hover mb-0">
-                                <thead>
-                                <tr>
-                                    <th scope="col">{{ __("ID") }}</th>
-                                    <th scope="col">{{ __("User") }}</th>
-                                    <th scope="col">{{ __("Action") }}</th>
-                                    <th scope="col">{{ __("Created At") }}</th>
-                                </tr>
-                                </thead>
                                 <tbody>
                                 @foreach ($logs as $log)
                                     <tr>
-                                        <td>{{ $log->id }}</td>
-                                        <td>{{ $log->user->name }}</td>
-                                        <td>{{ $log->action }}</td>
-                                        <td>{{ $log->created_at->diffForHumans() }}</td>
+                                        <td>{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
+                                        @if ( $log->action == 'inventory_added')
+                                            <td>{!! __('<strong>:user</strong> added <strong><i>:count :product</i></strong> products', ['user' => $log->user->name, 'count' => $log->data['quantity'], 'product' => $log->product->name] ) !!}</td>
+                                        @else
+                                            <td>{{ __(':user removed', ['user' => $log->user->name] ) }}</td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -8,6 +8,7 @@ use App\Models\Logs;
 use App\Models\Repo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RepoController extends Controller
 {
@@ -32,8 +33,17 @@ class RepoController extends Controller
     public function show($id)
     {
         $repo = Repo::findOrFail($id);
-        $logs = Logs::where('data->repo_id', $id)->get();
-        return view('repos.show', compact('repo', 'logs'));
+        $products = DB::table('repo_has_products')
+            ->join('products', 'repo_has_products.product_id', '=', 'products.id')
+            ->join('product_categories', 'products.category_id', '=', 'product_categories.id')
+            ->select('products.id', 'products.name', 'product_categories.name AS category_name', DB::raw('SUM(repo_has_products.quantity) AS total_quantity'))
+            ->where('repo_has_products.repo_id', $id)
+            ->groupBy('products.id', 'products.name', 'category_name')
+            ->orderBy('total_quantity', 'desc')
+            ->get();
+
+        $logs = Logs::with('product')->where('data->repo_id', $id)->get();
+        return view('repos.show', compact('repo', 'logs', 'products'));
     }
 
     public function edit($id)

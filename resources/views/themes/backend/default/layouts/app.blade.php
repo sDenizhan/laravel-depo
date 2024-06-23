@@ -102,6 +102,28 @@
 
                             <li class="menu-title">{{ __('Stock Management') }}</li>
 
+                            <li class="menu-item">
+                                <a href="#menuIntentory" data-bs-toggle="collapse" class="menu-link">
+                                    <span class="menu-icon"><i data-feather="box"></i></span>
+                                    <span class="menu-text"> {{ __('Inventory')  }}</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="menuIntentory">
+                                    <ul class="sub-menu">
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.inventory.index') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Add Inventory') }}</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.inventory.index') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Remove Inventory') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
                             <!-- Repo -->
                             <li class="menu-item">
                                 <a href="#menuRepo" data-bs-toggle="collapse" class="menu-link">

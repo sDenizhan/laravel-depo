@@ -43,4 +43,9 @@ class InventoryController extends Controller
             return redirect()->route('admin.inventory.index')->with('error', 'Failed to add product to inventory.');
         }
     }
+
+    public function destore(Request $request)
+    {
+
+    }
 }
