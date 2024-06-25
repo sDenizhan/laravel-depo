@@ -69,11 +69,14 @@
 
             const html5QrCode = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-                alert(decodedText);
-                console.log(decodedText);
+                document.getElementById('query').value = decodedText;
             };
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-            html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+            //html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+
+            $(document).on('focus', 'input#query', function(html5QrCode, qrCodeSuccessCallback, config){
+                html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+            });
 
             $(document).on('click', 'button.search', function(){
                 var query = $('#query').val();
