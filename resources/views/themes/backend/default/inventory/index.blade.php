@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <div class="row">
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 mb-3" style="display: none">
                                 <div id="reader" style="width: 300px; height: auto"></div>
                             </div>
 
@@ -70,12 +70,15 @@
 
             const html5QrCode = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                console.log(decodedResult);
+                html5QrCode.stop();
                 document.getElementById('query').value = decodedText;
             };
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
             //html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
 
-            $(document).on('focus', 'button.open_camera', function(){
+            $(document).on('click', 'button.open_camera', function(){
+                $('#reader').parent().toggle();
                 html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
             });
 
