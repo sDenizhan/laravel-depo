@@ -23,7 +23,12 @@
                 <form action="{{ route('admin.inventory.search') }}" method="GET">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-12">
+                                <div id="reader" width="600px"></div>
+                            </div>
+
+                            <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="query">{{ __('Product Search') }}</label>
                                     <div class="input-group">
@@ -58,8 +63,16 @@
 @endsection
 
 @push('scripts')
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
+
+            const html5QrCode = new Html5Qrcode("reader");
+            const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                console.log(decodedText);
+            };
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
 
             $(document).on('click', 'button.search', function(){
                 var query = $('#query').val();
@@ -72,7 +85,7 @@
                             query: query
                         },
                         success: function(response){
-                            if (response.status == 'success') {
+                            if (response.status === 'success') {
                                 $('.result').html(response.html);
                             }
                         }
