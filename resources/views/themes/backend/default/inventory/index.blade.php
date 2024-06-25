@@ -33,6 +33,7 @@
                                     <label for="query">{{ __('Product Search') }}</label>
                                     <div class="input-group">
                                         <input type="text" name="query" id="query" class="form-control" value="" placeholder="{{ __("Please Enter Product Name Or Product Barcode") }}">
+                                        <button class="btn input-group-btn btn-dark waves-effect waves-light open_camera" type="button">{{ __('Open Camera') }}</button>
                                         <button class="btn input-group-text btn-dark waves-effect waves-light search" type="button">{{ __('Search') }}</button>
                                     </div>
                                 </div>
@@ -74,7 +75,7 @@
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
             //html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
 
-            $(document).on('focus', 'input#query', function(html5QrCode, qrCodeSuccessCallback, config){
+            $(document).on('focus', 'button.open_camera', function(){
                 html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
             });
 
