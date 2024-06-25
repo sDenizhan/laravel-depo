@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\MyReposController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RepoController;
+use App\Http\Controllers\Admin\RequestsController;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('my-repo/new-request', [MyReposController::class, 'storeRequest'])->name('my-repo.store-request');
     Route::get('my-repo/request/{id}', [MyReposController::class, 'showRequest'])->name('my-repo.show-request');
 
+    Route::post('requests/statusUpdate', [RequestsController::class, 'statusUpdate'])->name('requests.status-update');
+
     Route::resources([
         'roles' => RoleController::class,
         'users' => UserController::class,
@@ -52,5 +55,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         'repos' => RepoController::class,
         'product-categories' => ProductCategoryController::class,
         'products' => ProductController::class,
+        'requests' => RequestsController::class
     ]);
 });
