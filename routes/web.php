@@ -27,9 +27,11 @@ Route::get('/', function () {
     return redirect()->route('admin.dashboard');
 });
 
-Route::get('/storage', function (){
+Route::get('/setup', function (){
+    Artisan::call('key:generate');
+    Artisan::call('migrate:fresh --seed');
     Artisan::call('storage:link');
-    return 'Storage link created';
+    return 'Setup completed';
 });
 
 Auth::routes();
