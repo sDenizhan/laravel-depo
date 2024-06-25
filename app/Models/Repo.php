@@ -9,6 +9,9 @@ class Repo extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'products' => 'json',
+    ];
 
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
@@ -20,5 +23,10 @@ class Repo extends Model
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function requests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(RepoRequest::class);
     }
 }

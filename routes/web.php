@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\MyReposController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RepoController;
@@ -36,6 +37,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('inventory/search', [InventoryController::class, 'search'])->name('inventory.search');
     Route::post('inventory', [InventoryController::class, 'store'])->name('inventory.store');
+
+    Route::get('my-repo', [MyReposController::class, 'index'])->name('my-repo.index');
+
+    Route::get('my-repo/my-requests', [MyReposController::class, 'myRequests'])->name('my-repo.my-requests');
+    Route::get('my-repo/new-request', [MyReposController::class, 'newRequest'])->name('my-repo.new-request');
+    Route::post('my-repo/new-request', [MyReposController::class, 'storeRequest'])->name('my-repo.store-request');
+    Route::get('my-repo/request/{id}', [MyReposController::class, 'showRequest'])->name('my-repo.show-request');
 
     Route::resources([
         'roles' => RoleController::class,

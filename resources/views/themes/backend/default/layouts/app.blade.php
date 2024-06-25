@@ -98,6 +98,33 @@
                             </a>
                         </li>
 
+                        @hasanyrole('Manager')
+                            <li class="menu-title">{{ __('My Repos') }}</li>
+
+                            <li class="menu-item">
+                                <a href="#menuMyRepos" data-bs-toggle="collapse" class="menu-link">
+                                    <span class="menu-icon"><i data-feather="box"></i></span>
+                                    <span class="menu-text"> {{ __('My Repos')  }}</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="menuMyRepos">
+                                    <ul class="sub-menu">
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.my-repo.index') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('My Repo') }}</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.my-repo.my-requests') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Requests') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        @endrole
+
                         @hasanyrole('Super Admin|Admin')
 
                             <li class="menu-title">{{ __('Stock Management') }}</li>

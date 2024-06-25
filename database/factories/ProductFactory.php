@@ -19,7 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             'category_id' => $this->faker->randomElement(ProductCategory::pluck('id')->toArray()),
-            'name' => $this->faker->name,
+            'name' => $this->faker->text(15),
             'description' => $this->faker->text,
             'barcode' => $this->faker->randomNumber(8, true),
             'price' => $this->faker->randomFloat(2, 1, 1000),

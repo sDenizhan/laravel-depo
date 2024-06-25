@@ -21,11 +21,27 @@ class PermissionSeeder extends Seeder
             'create-user',
             'edit-user',
             'delete-user',
-         ];
+            'create-product',
+            'edit-product',
+            'view-product',
+            'delete-product',
+            'create-product-category',
+            'edit-product-category',
+            'view-product-category',
+            'delete-product-category',
+            'create-prescription',
+            'edit-prescription',
+            'delete-prescription',
+            'show-prescription',
+            'view-repo',
+            'create-repo',
+            'edit-repo',
+            'delete-repo',
+        ];
 
-          // Looping and Inserting Array's Permissions into Permission Table
-         foreach ($permissions as $permission) {
+        // Looping and Inserting Array's Permissions into Permission Table
+        foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
-          }
+        }
     }
 }
