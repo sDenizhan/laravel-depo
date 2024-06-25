@@ -25,7 +25,7 @@
                         <div class="row">
 
                             <div class="col-lg-12">
-                                <div id="reader" width="600px"></div>
+                                <div id="reader" style="width: 300px; height: auto"></div>
                             </div>
 
                             <div class="col-lg-12">
@@ -69,6 +69,7 @@
 
             const html5QrCode = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                alert(decodedText);
                 console.log(decodedText);
             };
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
