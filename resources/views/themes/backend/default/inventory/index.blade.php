@@ -68,7 +68,7 @@
     <script>
         $(document).ready(function(){
 
-            const html5QrCode = new Html5Qrcode("reader");
+            const html5QrCode = new Html5Qrcode("reader", { fps: 10, qrbox: 250 ,focusMode: "continuous"});
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
                 console.log(decodedResult);
                 html5QrCode.stop();
@@ -79,7 +79,7 @@
 
             $(document).on('click', 'button.open_camera', function(){
                 $('#reader').parent().toggle();
-                html5QrCode.start({ facingMode: "environment", focusMode: "continuous" }, config, qrCodeSuccessCallback);
+                html5QrCode.start({ facingMode: "environment"}, config, qrCodeSuccessCallback);
             });
 
             $(document).on('click', 'button.search', function(){
