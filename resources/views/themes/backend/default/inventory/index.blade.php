@@ -79,7 +79,7 @@
 
             $(document).on('click', 'button.open_camera', function(){
                 $('#reader').parent().toggle();
-                html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+                html5QrCode.start({ facingMode: "environment", focusMode: "continuous" }, config, qrCodeSuccessCallback);
             });
 
             $(document).on('click', 'button.search', function(){
