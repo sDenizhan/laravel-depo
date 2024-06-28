@@ -68,7 +68,7 @@
     <script>
         $(document).ready(function(){
 
-            const html5QrCode = new Html5Qrcode("reader", { fps: 10, qrbox: 250 ,focusMode: "continuous"});
+            const html5QrCode = new Html5Qrcode("reader", { fps: 10, qrbox: { width: 250, height: 250 }, experimentalFeatures: { useBarCodeDetectorIfSupported: true }, rememberLastUsedCamera: true, verbose: true });
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
                 console.log(decodedResult);
                 html5QrCode.stop();
