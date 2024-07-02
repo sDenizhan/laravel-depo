@@ -13,12 +13,20 @@ return new class extends Migration
     {
         Schema::create('repo_has_products', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('repo_id')->unsigned();
+
+            $table->bigInteger('source_id')->unsigned(); // 0 = Supplier | >0 = Other Repos
+            $table->bigInteger('target_id')->unsigned(); // repos
+
             $table->bigInteger('product_id')->unsigned();
             $table->integer('quantity')->default(0);
-            $table->decimal('price', 10, 2)->default(0);
-            $table->integer('currency')->default(0);
-            $table->foreign('repo_id')->references('id')->on('repos')->onDelete('cascade');
+
+            $table->bigInteger('action_by')->unsigned();
+            $table->timestamp('action_at')->useCurrent();
+            $table->string('action_note')->nullable();
+
+            $table->foreign('action_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('target_id')->references('id')->on('repos')->onDelete('cascade');
+            $table->foreign('source_id')->references('id')->on('repos')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

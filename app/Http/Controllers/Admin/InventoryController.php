@@ -28,9 +28,7 @@ class InventoryController extends Controller
         $query = $request->post('query') ?? '';
         $product = Product::where('name', 'like', "%$query%")->orWhere('barcode', 'like', "%$query%")->first();
         if ( $product ) {
-            $repos = Repo::all();
-            $html = view('components.backend.inventory.product-form', compact('product', 'repos'))->render();
-            return response()->json(['status' => 'success', 'html' => $html]);
+            return response()->json(['status' => 'success', 'data' => $product]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Product not found.']);
         }
