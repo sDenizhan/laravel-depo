@@ -50,12 +50,12 @@
                                     <td>{{ $product->barcode }}</td>
                                     <td>
                                         @can('edit-product')
-                                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
                                         @endcan
 
                                         @can('delete-product')
                                             @if ($product->name!=Auth::user()->hasRole($product->name))
-                                                <a href="{{ route('admin.products.destroy', ['product' => $product->id ]) }}" type="submit" class="btn btn-danger btn-sm remove_product"><i class="bi bi-trash"></i> Delete</a>
+                                                <a href="{{ route('admin.products.destroy', ['product' => $product->id ]) }}" type="submit" class="btn btn-danger btn-sm remove_product"><i class="bi bi-trash"></i></a>
                                             @endif
                                         @endcan
                                     </td>
@@ -63,7 +63,7 @@
                             @empty
                                 <td colspan="3">
                                 <span class="text-danger">
-                                    <strong>No Product Found!</strong>
+                                    <strong>{{ __('Products Not Found') }}</strong>
                                 </span>
                                 </td>
                             @endforelse
@@ -74,3 +74,34 @@
         </div>
     </div>
 @endsection
+
+
+@push('styles')
+    <!-- third party css -->
+    <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- third party css end -->
+@endpush
+
+@push('scripts')
+    <!-- third party js -->
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src=" {{ asset('themes/backend/default/assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
+    <!-- third party js ends -->
+
+    <!-- Datatables init -->
+    <script src=" {{ asset('themes/backend/default/assets/js/pages/datatables.init.js') }}"></script>
+@endpush
