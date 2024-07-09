@@ -23,7 +23,7 @@
             <div class="card-header">
                 <ul class="nav nav-pills card-header-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.product-categories.create') }}">{{ __('Add New') }}</a>
+                        <a class="nav-link active" href="{{ route('admin.prescriptions.create') }}">{{ __('Add New') }}</a>
                     </li>
                 </ul>
             </div>
