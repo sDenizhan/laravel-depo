@@ -123,6 +123,28 @@
                                 </div>
                             </li>
 
+                            <li class="menu-item">
+                                <a href="#menuPrescriptions" data-bs-toggle="collapse" class="menu-link">
+                                    <span class="menu-icon"><i data-feather="box"></i></span>
+                                    <span class="menu-text"> {{ __('Prescriptions')  }}</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="menuPrescriptions">
+                                    <ul class="sub-menu">
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.prescriptions.index') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Prescriptions') }}</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.prescriptions.create') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Add Prescription') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
                         @endrole
 
                         @hasanyrole('Super Admin|Admin')

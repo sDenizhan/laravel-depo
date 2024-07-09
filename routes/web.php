@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\MyReposController;
+use App\Http\Controllers\Admin\PrescriptionController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RepoController;
@@ -54,6 +55,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::post('requests/statusUpdate', [RequestsController::class, 'statusUpdate'])->name('requests.status-update');
 
+    //prescription search
+    Route::post('prescriptions/search', [PrescriptionController::class, 'search'])->name('prescriptions.search');
+    Route::post('prescriptions/select', [PrescriptionController::class, 'select'])->name('prescriptions.select-medicine');
+    Route::get('prescriptions/print/{id}', [PrescriptionController::class, 'print'])->name('prescriptions.print');
+
     Route::resources([
         'roles' => RoleController::class,
         'users' => UserController::class,
@@ -61,6 +67,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         'repos' => RepoController::class,
         'product-categories' => ProductCategoryController::class,
         'products' => ProductController::class,
-        'requests' => RequestsController::class
+        'requests' => RequestsController::class,
+        'prescriptions' => PrescriptionController::class
     ]);
 });

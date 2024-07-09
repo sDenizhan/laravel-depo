@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\LogInventoryAdded;
+use App\Events\PrescriptionCreated;
 use App\Listeners\ListenerLogInventoryAdded;
+use App\Listeners\PrescriptionCreatedListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
+        PrescriptionCreated::class => [
+            PrescriptionCreatedListener::class
+        ],
         LogInventoryAdded::class => [
             ListenerLogInventoryAdded::class
         ],
