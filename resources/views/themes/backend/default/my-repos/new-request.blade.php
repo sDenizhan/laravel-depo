@@ -119,6 +119,14 @@
                 form.find('div.submit').prepend(html);
             });
 
+            //remove
+            $(document).on('click', 'button.remove', function(e){
+                e.preventDefault();
+
+                var id = $(this).data('id');
+                $('#product-'+id).remove();
+            });
+
             $(document).on('submit', 'form#RequestForm', function(e){
                 e.preventDefault();
 
