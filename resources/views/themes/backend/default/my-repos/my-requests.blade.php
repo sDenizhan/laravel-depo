@@ -46,7 +46,7 @@
                                     <td>
                                         @if ($request->status == 'pending')
                                             <span class="badge bg-warning">{{ __('Pending') }}</span>
-                                        @elseif ($request->status == 'accepted')
+                                        @elseif ($request->status == 'approved')
                                             <span class="badge bg-success">{{ __('Accepted') }}</span>
                                         @else
                                             <span class="badge bg-danger">{{ __('Rejected') }}</span>
