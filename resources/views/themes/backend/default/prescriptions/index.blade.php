@@ -33,6 +33,9 @@
                         <tr>
                             <th>{{ __('Patient Name') }}</th>
                             <th>{{ __('Patient Birthday') }}</th>
+                            @hasanyrole('Super Admin')
+                                <th>{{ __('Manager') }}</th>
+                            @endrole
                             <th>{{ __('Created At') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
@@ -42,6 +45,9 @@
                             <tr>
                                 <td>{{ $row->patient_name }}</td>
                                 <td>{{ $row->patient_birthday }}</td>
+                                @hasanyrole('Super Admin')
+                                <td>{{ $row->user->name }}</td>
+                                @endrole
                                 <td>{{ $row->created_at->format('d/m/Y H:i:s') }}</td>
                                 <td>
                                     @can('show-prescription')

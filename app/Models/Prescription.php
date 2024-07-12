@@ -18,4 +18,9 @@ class Prescription extends Model
     {
         return $this->hasMany(PrescriptionMedicines::class, 'prescription_id', 'id');
     }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

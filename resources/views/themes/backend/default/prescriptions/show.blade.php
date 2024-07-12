@@ -26,7 +26,7 @@
                 </div>
                 <div class="float-end">
                     <a href="{{ route('admin.prescriptions.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
-                    <a href="{{ route('admin.prescriptions.print', $prescription->id) }}" class="btn btn-primary btn-sm">Print</a>
+                    <a href="{{ route('admin.prescriptions.print', ['id' => $prescription->id ]) }}" class="btn btn-primary btn-sm">Print</a>
                 </div>
             </div>
             <div class="card-body">

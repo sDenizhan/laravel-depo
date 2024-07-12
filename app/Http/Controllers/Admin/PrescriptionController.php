@@ -23,7 +23,15 @@ class PrescriptionController extends Controller
 
     public function index()
     {
-        $prescriptions = Prescription::where(['user_id' => auth()->id()])->get();
+
+        $prescriptions = Prescription::query()
+                        ->when(!auth()->user()->hasRole('Super Admin'), function ($query) {
+                            return $query->where(['user_id' => auth()->id()]);
+                        })
+                        ->when(auth()->user()->hasRole('Super Admin'), function ($query){
+                            return $query;
+                        })->get();
+
         return view('prescriptions.index', compact('prescriptions'));
     }
 
@@ -79,19 +87,47 @@ class PrescriptionController extends Controller
 
     public function show($id)
     {
-        $prescription = Prescription::where(['user_id' => auth()->id()])->find($id);
+        $prescription = Prescription::query();
+        $prescription->when(!auth()->user()->hasRole('Super Admin'), function ($query, $id) {
+            return $query->where(['user_id' => auth()->id()]);
+        });
+        $prescription->when(auth()->user()->hasRole('Super Admin'), function ($query, $id) {
+            return $query;
+        });
+
+        $prescription = $prescription->find($id);
+
         return view('prescriptions.show', compact('prescription'));
     }
 
     public function print($id)
     {
-        $prescription = Prescription::where(['user_id' => auth()->id()])->find($id);
+        $prescription = Prescription::query();
+        $prescription->when(!auth()->user()->hasRole('Super Admin'), function ($query, $id) {
+            return $query->where(['user_id' => auth()->id()]);
+        });
+        $prescription->when(auth()->user()->hasRole('Super Admin'), function ($query, $id) {
+            return $query;
+        });
+
+        $prescription = $prescription->find($id);
+
         return view('prescriptions.print', compact('prescription'));
     }
 
     public function edit($id)
     {
-        $prescription = Prescription::where(['user_id' => auth()->id()])->find($id);
+        $prescription = Prescription::query();
+        $prescription->when(!auth()->user()->hasRole('Super Admin'), function ($query, $id) {
+            return $query->where(['user_id' => auth()->id()]);
+        });
+        $prescription->when(auth()->user()->hasRole('Super Admin'), function ($query, $id) {
+            return $query;
+        });
+
+        $prescription = $prescription->find($id);
+
+
         return view('prescriptions.edit', compact('prescription'));
     }
 
@@ -102,6 +138,10 @@ class PrescriptionController extends Controller
 
     public function destroy($id)
     {
+        if ( ! auth()->user()->can('delete-prescriptions') ) {
+            return redirect()->route('admin.prescriptions.index')->with('error', 'You do not have permission to delete prescription');
+        }
+
         $prescription = Prescription::find($id);
         $prescription->delete();
         return redirect()->route('admin.prescriptions.index')->with('success', 'Prescription deleted successfully');

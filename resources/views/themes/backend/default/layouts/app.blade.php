@@ -122,6 +122,9 @@
                                     </ul>
                                 </div>
                             </li>
+                        @endrole
+
+                        @hasanyrole('Super Admin|Manager')
 
                             <li class="menu-item">
                                 <a href="#menuPrescriptions" data-bs-toggle="collapse" class="menu-link">
