@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <form action="{{ route('admin.inventory.store') }}" method="post" id="inventoryForm">
+    <form action="{{ route('admin.inventory.remove-store') }}" method="post" id="inventoryForm">
         @csrf
         @method('POST')
         <div class="row">

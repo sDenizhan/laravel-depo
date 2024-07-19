@@ -22,11 +22,11 @@ class StoreInventoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => 'required|exists:products,id',
-            'repo_id' => 'required|exists:repos,id',
-            'quantity' => 'required|numeric|min:1',
-            'price' => 'required',
-            'currency' => 'required',
+            'products' => ['array', 'required'],
+            'products.*' => ['required', 'integer'],
+            'repo_id' => ['required', 'integer'],
+            'user_id' => ['required'],
+            'description' => 'required',
         ];
     }
 }

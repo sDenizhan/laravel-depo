@@ -38,7 +38,7 @@
                             @forelse ($requests as $request)
                                 <tr>
                                     <th scope="row">{{ $request->id }}</th>
-                                    <td>{{ $request->repo->name }}</td>
+                                    <td>{{ $request->repo->name ?? ''}}</td>
                                     <td>{{ $request->user->name }}</td>
                                     <td>
                                         @if ($request->status == 'pending')

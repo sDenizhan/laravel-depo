@@ -168,7 +168,7 @@
                                             </a>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="{{ route('admin.inventory.index') }}" class="menu-link">
+                                            <a href="{{ route('admin.inventory.remove') }}" class="menu-link">
                                                 <span class="menu-text">{{ __('Remove Inventory') }}</span>
                                             </a>
                                         </li>
@@ -198,6 +198,23 @@
                                     </ul>
                                 </div>
                             </li>
+
+                        <li class="menu-item">
+                            <a href="#menuRequests" data-bs-toggle="collapse" class="menu-link">
+                                <span class="menu-icon"><i data-feather="box"></i></span>
+                                <span class="menu-text"> {{ __('Requests')  }}</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="menuRequests">
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="{{ route('admin.requests.index') }}" class="menu-link">
+                                            <span class="menu-text">{{ __('Requests') }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
                             <li class="menu-item">
                                 <a href="#menuProducts" data-bs-toggle="collapse" class="menu-link">

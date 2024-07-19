@@ -114,10 +114,10 @@
                                 @foreach ($logs as $log)
                                     <tr>
                                         <td>{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
-                                        @if ( $log->action == 'inventory_added')
-                                            <td>{!! __('<strong>:user</strong> added <strong><i>:count :product</i></strong> products', ['user' => $log->user->name, 'count' => $log->data['quantity'], 'product' => $log->product->name] ) !!}</td>
+                                        @if ( $log->action == 'in')
+                                            <td>{!! __('<strong>:user</strong> added <strong><i>:count :product</i></strong> products', ['user' => $log->user->name, 'count' => $log->count, 'product' => $log->product->name] ) !!}</td>
                                         @else
-                                            <td>{{ __(':user removed', ['user' => $log->user->name] ) }}</td>
+                                            <td>{!! __('<strong>:user</strong> removed <strong><i>:count :product</i></strong> products', ['user' => $log->user->name, 'count' => $log->count, 'product' => $log->product->name] ) !!}</td>
                                         @endif
                                     </tr>
                                 @endforeach

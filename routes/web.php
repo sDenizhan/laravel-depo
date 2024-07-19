@@ -44,7 +44,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('inventory/search', [InventoryController::class, 'search'])->name('inventory.search');
-    Route::post('inventory', [InventoryController::class, 'store'])->name('inventory.store');
+    Route::post('inventory/store', [InventoryController::class, 'store'])->name('inventory.store');
+    Route::post('inventory/check', [InventoryController::class, 'check'])->name('inventory.source-repo-check');
+    Route::get('inventory/remove', [InventoryController::class, 'remove'])->name('inventory.remove');
+    Route::post('inventory/remove', [InventoryController::class, 'remove_store'])->name('inventory.remove-store');
+
+
 
     Route::get('my-repo', [MyReposController::class, 'index'])->name('my-repo.index');
 
@@ -59,6 +64,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('prescriptions/search', [PrescriptionController::class, 'search'])->name('prescriptions.search');
     Route::post('prescriptions/select', [PrescriptionController::class, 'select'])->name('prescriptions.select-medicine');
     Route::get('prescriptions/print/{id}', [PrescriptionController::class, 'print'])->name('prescriptions.print');
+
+
 
     Route::resources([
         'roles' => RoleController::class,

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRepoRequest;
 use App\Models\Logs;
 use App\Models\Repo;
+use App\Models\RepoLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,7 @@ class RepoController extends Controller
             ->orderBy('total_quantity', 'desc')
             ->get();
 
-        $logs = Logs::with('product')->where('data->repo_id', $id)->get();
+        $logs = RepoLog::with('product')->where('repo_id', $id)->orderBy('created_at', 'desc')->limit(10)->get();
         return view('repos.show', compact('repo', 'logs', 'products'));
     }
 
