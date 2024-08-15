@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRepoRequest;
+use App\Http\Requests\UpdateRepoRequest;
 use App\Models\Logs;
 use App\Models\Repo;
 use App\Models\RepoLog;
@@ -27,6 +28,10 @@ class RepoController extends Controller
 
     public function store(StoreRepoRequest $request)
     {
+        if ( $request->is_main ) {
+            Repo::where('is_main', true)->update(['is_main' => false]);
+        }
+
         Repo::create($request->validated());
         return redirect()->route('admin.repos.index')->withSuccess('Repo created.');
     }
@@ -49,13 +54,27 @@ class RepoController extends Controller
 
     public function edit($id)
     {
+        $repo = Repo::find($id);
+        $users = User::all();
+        return view('repos.edit', compact('repo', 'users'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRepoRequest $request, $id)
     {
+        $repo = Repo::find($id);
+
+        if ( $request->is_main ) {
+            Repo::where('is_main', true)->update(['is_main' => false]);
+        }
+
+        $repo->update($request->validated());
+        return redirect()->route('admin.repos.edit', ['repo' => $repo->id])->withSuccess('Repo updated.');
     }
 
     public function destroy($id)
     {
+        $repo = Repo::find($id);
+        $repo->delete();
+        return response()->json(['status' => 'success', 'message' => 'Repo deleted.']);
     }
 }

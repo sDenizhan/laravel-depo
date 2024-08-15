@@ -4,70 +4,85 @@
     @php
         $data = [
             [
-                'title' => __('Hospitals'),
-                'url' => route('admin.hospitals.index')
+                'title' => __('Repositories'),
+                'url' => route('admin.repos.index')
             ],
             [
-                'title' => __('Edit Hospital'),
+                'title' => __('Edit Repository'),
                 'url' => ''
             ]
         ];
     @endphp
-    <x-backend.breadcrumbs title="{{ __('Edit Hospital') }}" :links="$data" />
+    <x-backend.breadcrumbs title="{{ __('Repositories') }}" :links="$data" />
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <form action="{{ route('admin.hospitals.update', ['hospital' => $hospital->id]) }}" method="POST">
-                    @csrf
+                <form action="{{ route('admin.repos.update', ['repo' => $repo->id]) }}" method="POST">
                     @method('PUT')
-
+                    @csrf
                     <div class="card-body">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">{{ __('Hospital Name') }}</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') ?? $hospital->name }}">
-                            @error('name')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">{{ __('Repo Name') }}</label>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') ?? $repo->name }}">
+                                    @error('name')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="is_main" class="form-label">{{ __('Is Main Repo?') }}</label>
+                                    <select name="is_main" id="is_main" class="form-control">
+                                        <option value="1" {{ old('is_main') ?? $repo->is_main == 1 ? 'selected' : '' }}>{{ __('Yes') }}</option>
+                                        <option value="0" {{ old('is_main') ?? $repo->is_main == 0 ? 'selected' : '' }}>{{ __('No') }}</option>
+                                    </select>
+                                    @error('is_main')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="min_alert" class="form-label">{{ __('Min. Alert Count') }}</label>
+                                    <input type="text" name="min_alert" id="min_alert" class="form-control" placeholder="{{ __('Min. Alert Count') }}" value="{{ old('min_alert') ?? $repo->min_alert }}">
+                                    @error('min_alert')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="address" class="form-label">{{ __('Address') }}</label>
-                            <textarea name="address" id="address" class="form-control" placeholder="{{ __('Address') }}">{{ old('address') ?? $hospital->address }}</textarea>
-                            @error('address')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="user_id" class="form-label">{{ __('Manager') }}</label>
+                                <select name="user_id" id="user_id" class="form-control">
+                                    @php
+                                        foreach ($users as $user) {
+                                            $selected = $user->id == old('user_id') ?? $repo->user_id ? 'selected' : '';
+                                            echo '<option value="'. $user->id .'" '. $selected .'>'. join(' - ', [$user->name, $user->getRoleNames()->first()]) .'</option>';
+                                        }
+                                    @endphp
+                                </select>
+                                @error('status')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="statusx" class="form-label">{{ __('Status') }}</label>
-                            <select name="status" id="statusx" class="form-control">
-                                @php
-                                    $status = App\Enums\Status::toArray();
-                                    foreach ($status as $key => $value) {
-                                        $selected = old('status') == $key ? 'selected' : '';
-                                        echo '<option value="'. $key .'" '. $selected .'>'. $value .'</option>';
-                                    }
-                                @endphp
-                            </select>
-                            @error('status')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="doctors" class="form-label">{{ __('Doctors') }}</label>
-                            <select name="doctors[]" id="doctors" class="form-control select2" multiple>
-                                @foreach ($doctors as $doctor)
-                                    <option value="{{ $doctor->id }}" {{ in_array($doctor->id, $selectedDoctors->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $doctor->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('doctors')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            @if(session()->has('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-sm btn-primary">{{ __('Save') }}</button>
+                        <button type="submit" class="btn btn-sm btn-primary">{{ __('Update') }}</button>
                     </div>
                 </form>
             </div>
@@ -75,16 +90,12 @@
     </div>
 @endsection
 
+
 @push('styles')
     <link rel="stylesheet" href="{{ asset('themes/backend/default/assets/libs/multiselect/css/multi-select.css') }}">
     <link rel="stylesheet" href="{{ asset('themes/backend/default/assets/libs/select2/css/select2.min.css') }}">
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('themes/backend/default/assets/libs/select2/js/select2.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script>
+
 @endpush

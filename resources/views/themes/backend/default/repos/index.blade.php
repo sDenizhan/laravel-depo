@@ -48,17 +48,12 @@
                                 <td>{{ $repo->is_main ? __('Yes') : __('No') }}</td>
                                 <td>{{ $repo->min_alert }}</td>
                                 <td>
-                                    <form action="{{ route('admin.repos.destroy', $repo->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
+                                    <a href="{{ route('admin.repos.show', $repo->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('admin.repos.edit', $repo->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
 
-                                        <a href="{{ route('admin.repos.show', $repo->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('admin.repos.edit', $repo->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-
-                                        @can('delete-repo')
-                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-recycle"></i></button>
-                                        @endcan
-                                    </form>
+                                    @can('delete-repo')
+                                        <a href="{{ route('admin.repos.destroy', ['repo' => $repo->id]) }}" class="btn btn-danger btn-sm btn-delete"><i class="fas fa-recycle"></i></a>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach
@@ -76,6 +71,8 @@
  <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
  <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
  <link href="{{ asset('themes/backend/default/assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+
+ <link href="{{ asset('themes/backend/default/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
  <!-- third party css end -->
 @endpush
 
@@ -97,5 +94,52 @@
     <!-- third party js ends -->
 
     <!-- Datatables init -->
-    <script src=" {{ asset('themes/backend/default/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ asset('themes/backend/default/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ asset('themes/backend/default/assets/libs/sweetalert2/sweetalert2.min.js')  }}"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            $('.btn-delete').on('click', function(e){
+                e.preventDefault();
+                var url = $(this).attr('href');
+                Swal.fire({
+                    title: '{{ __("Are you sure?") }}',
+                    text: '{{ __("You wont be able to revert this!") }}',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#4b3e2e',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '{{ __("Yes, delete it!") }}'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response){
+                                if(response.status == 'success'){
+                                    Swal.fire(
+                                        '{{ __("Deleted!") }}',
+                                        '{{ __("Your repo has been deleted.") }}',
+                                        'success'
+                                    ).then((result) => {
+                                        location.reload();
+                                    });
+                                }else{
+                                    Swal.fire(
+                                        '{{ __("Error!") }}',
+                                        '{{ __("There is an error.") }}',
+                                        'error'
+                                    );
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endpush
