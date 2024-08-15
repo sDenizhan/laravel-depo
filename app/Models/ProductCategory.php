@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductCategory extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
 }

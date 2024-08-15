@@ -28,7 +28,8 @@ class ProductCategoryController extends Controller
 
     public function create()
     {
-        return view('product-categories.create');
+        $categories = ProductCategory::where(['parent_id' => 0])->get();
+        return view('product-categories.create', compact('categories'));
     }
 
     public function store(StoreProductCategoryRequest $request)
@@ -41,8 +42,9 @@ class ProductCategoryController extends Controller
 
     public function edit(?int $id)
     {
+        $categories = ProductCategory::where(['parent_id' => 0])->get();
         $category = ProductCategory::find($id);
-        return view('product-categories.edit', compact('category'));
+        return view('product-categories.edit', compact('category', 'categories'));
     }
 
     public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)

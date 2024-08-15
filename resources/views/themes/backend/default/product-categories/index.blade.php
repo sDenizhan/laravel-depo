@@ -32,6 +32,7 @@
                     <thead>
                         <tr>
                             <th>{{ __('Name') }}</th>
+                            <th>{{ __('Main Category') }}</th>
                             <th>{{ __('Use For Medicine?') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
@@ -40,6 +41,7 @@
                         @foreach ($categories as $category)
                             <tr>
                                 <td>{{ $category->name }}</td>
+                                <td>{{ $category->parent->name ?? '-' }}</td>
                                 <td>{{ $category->use_for_prescription  == 1 ? __('Yes') : __('No') }}</td>
                                 <td>
                                     <a href="{{ route('admin.product-categories.edit', $category->id) }}" class="btn btn-sm btn-primary">Edit</a>

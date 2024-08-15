@@ -30,7 +30,7 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">{{ __('Name') }}</label>
                                     <input type="text" name="name" id="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') ?? $category->name }}">
@@ -39,7 +39,22 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="parent_id" class="form-label">{{ __('Parent Category') }}</label>
+                                    <select name="parent_id" id="parent_id" class="form-control">
+                                        <option value="0">{{ __('No Parent') }}</option>
+                                        @foreach($categories as $cat)
+                                            <option value="{{ $cat->id }}" {{ $category->parent_id == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('parent_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label for="use_for_prescription" class="form-label">{{ __('Use For Prescription') }}</label>
                                     <select name="use_for_prescription" id="use_for_prescription" class="form-control">

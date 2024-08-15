@@ -23,6 +23,7 @@ class StoreProductCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'parent_id' => 'required|integer',
             'use_for_prescription' => ['required', 'integer', new \App\Rules\UniqueUseForPrescription()],
         ];
     }
