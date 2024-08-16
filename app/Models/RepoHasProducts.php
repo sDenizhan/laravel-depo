@@ -11,4 +11,9 @@ class RepoHasProducts extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'repo_has_products';
+
+    public function repo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Repo::class, 'repo_id', 'id');
+    }
 }

@@ -24,6 +24,17 @@ use App\Http\Controllers\Admin\PermissionController;
 |
 */
 
+//Route::get('/test-email', function () {
+//
+//    $details = [
+//        'title' => 'Mail from Bookingsurgery',
+//        'body' => 'This is a test email from your application. If you received this email, it means your email settings are correct.'
+//    ];
+//
+//    \Illuminate\Support\Facades\Mail::to('suleyman@bookingsurgery.com', 'Suleyman')->send(new \App\Mail\ProductAlertMail($details));
+//
+//});
+
 Route::get('/', function () {
     return redirect()->route('admin.dashboard');
 });
@@ -65,6 +76,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('prescriptions/select', [PrescriptionController::class, 'select'])->name('prescriptions.select-medicine');
     Route::get('prescriptions/print/{id}', [PrescriptionController::class, 'print'])->name('prescriptions.print');
 
+
+    //alert
+    Route::get('alert-settings', [App\Http\Controllers\Admin\AlertSettingsController::class, 'index'])->name('alert-settings.index');
+    Route::post('alert-settings', [App\Http\Controllers\Admin\AlertSettingsController::class, 'store'])->name('alert-settings.store');
+
+    //email
+    Route::get('email-settings', [App\Http\Controllers\Admin\EmailSettingsController::class, 'index'])->name('email-settings.index');
+    Route::post('email-settings', [App\Http\Controllers\Admin\EmailSettingsController::class, 'store'])->name('email-settings.store');
 
 
     Route::resources([
