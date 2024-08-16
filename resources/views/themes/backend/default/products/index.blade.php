@@ -54,9 +54,7 @@
                                         @endcan
 
                                         @can('delete-product')
-                                            @if ($product->name!=Auth::user()->hasRole($product->name))
-                                                <a href="{{ route('admin.products.destroy', ['product' => $product->id ]) }}" type="submit" class="btn btn-danger btn-sm remove_product"><i class="bi bi-trash"></i></a>
-                                            @endif
+                                            <a href="{{ route('admin.products.destroy', ['product' => $product->id ]) }}" class="btn btn-danger btn-sm remove_product"><i class="bi bi-trash"></i></a>
                                         @endcan
                                     </td>
                                 </tr>

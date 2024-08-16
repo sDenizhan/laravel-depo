@@ -30,6 +30,7 @@ class StoreProductRequest extends FormRequest
             'price' => 'required|numeric',
             'currency' => 'required|in:1,2,3,4',
             'description' => 'nullable',
+            'min_alert' => 'required|numeric',
         ];
     }
 }

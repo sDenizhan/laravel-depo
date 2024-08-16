@@ -96,6 +96,13 @@
                     <div class="row">
                         <div class="col-lg-12 col-12">
                             <div class="mb-3">
+                                <label for="min_alert" class="form-label">{{ __('Minimum Alert Count') }}</label>
+                                <input type="text" class="form-control @error('min_alert') is-invalid @enderror" id="min_alert" name="min_alert" value="{{ old('min_alert') ?? $product->min_alert }}">
+                                @error('min_alert')
+                                    <span class="text-danger">{{ $errors->first('min_alert') }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
                                 <label for="description" class="form-label">{{ __('Product Description') }}</label>
                                 <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror">{{ $product->description ?? old('description') }}</textarea>
                                 @error('description')
