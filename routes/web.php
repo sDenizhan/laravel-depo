@@ -24,17 +24,6 @@ use App\Http\Controllers\Admin\PermissionController;
 |
 */
 
-//Route::get('/test-email', function () {
-//
-//    $details = [
-//        'title' => 'Mail from Bookingsurgery',
-//        'body' => 'This is a test email from your application. If you received this email, it means your email settings are correct.'
-//    ];
-//
-//    \Illuminate\Support\Facades\Mail::to('suleyman@bookingsurgery.com', 'Suleyman')->send(new \App\Mail\ProductAlertMail($details));
-//
-//});
-
 Route::get('/', function () {
     return redirect()->route('admin.dashboard');
 });
@@ -59,6 +48,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('inventory/check', [InventoryController::class, 'check'])->name('inventory.source-repo-check');
     Route::get('inventory/remove', [InventoryController::class, 'remove'])->name('inventory.remove');
     Route::post('inventory/remove', [InventoryController::class, 'remove_store'])->name('inventory.remove-store');
+
+    //notify readed
+    Route::post('notify/readed', [\App\Http\Controllers\Admin\DashboardController::class, 'notifyReaded'])->name('notifications.read');
 
 
 

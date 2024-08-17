@@ -381,6 +381,54 @@
                                 </div>
                             </li>
 
+                            @php
+                                $notifications = auth()->user()->unreadNotifications;
+                            @endphp
+
+                            <li class="dropdown notification-list">
+                                <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <i class="fe-bell font-22"></i>
+                                    <span class="badge bg-danger rounded-circle noti-icon-badge">{{ count($notifications) ?? 0 }}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
+                                    <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0 font-16 fw-semibold"> Notification</h6>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="javascript: void(0);" class="text-dark text-decoration-underline">
+                                                    <small>Clear All</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="px-1" style="max-height: 300px;" data-simplebar>
+
+                                        @if ($notifications)
+                                            @foreach($notifications as $notify)
+                                                <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-1" data-notifyId="{{ $notify->id }}">
+                                                    <div class="card-body">
+                                                        <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-grow-1 text-truncate ms-2">
+                                                                <h5 class="noti-item-title fw-semibold font-14">{{ __(':name Product is Very Low!', ['name' => $notify->data['product_name']]) }}</h5>
+                                                                <small class="noti-item-subtitle text-muted">{{ __('Product :name has :count units left in warehouse :repo', ['name' => $notify->data['product_name'], 'count' => $notify->data['product_quantity'], 'repo' => $notify->data['repo_name']]) }}</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            @endforeach
+                                        @endif
+
+                                        <div class="text-center">
+                                            <i class="mdi mdi-dots-circle mdi-spin text-muted h3 mt-0"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
                             <!-- Light/Dark Mode Toggle Button -->
                             <li class="d-none d-sm-inline-block">
                                 <div class="nav-link waves-effect waves-light" id="light-dark-mode">
@@ -472,6 +520,20 @@
         </div>
         <!-- END wrapper -->
 
+        <div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myCenterModalLabel">Center modal</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p></p>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
         <!-- Vendor js -->
         <script src="{{ asset('themes/backend/default/assets/js/vendor.min.js')}}"></script>
 
@@ -479,6 +541,34 @@
         <script src="{{ asset('themes/backend/default/assets/js/app.min.js')}}"></script>
 
         <script src="{{ asset('themes/backend/default/assets/js/pages/material-symbols.init.js')}}"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('a.read-noti').on('click', function(){
+                    let title = $(this).find('h5.noti-item-title').text();
+                    let body = $(this).find('small.noti-item-subtitle').text();
+                    let notifyId = $(this).data('notifyid');
+
+                    $.ajax({
+                        url: "{{ route('admin.notifications.read') }}",
+                        type: 'POST',
+                        data: {
+                            _token : "{{ csrf_token() }}",
+                            notifyId: notifyId
+                        },
+                        success: function(response){
+                            console.log(response);
+                        }
+                    });
+
+                    $('#centermodal h4.modal-title').text(title);
+                    $('#centermodal p').text(body);
+
+                    $('#centermodal').modal('show');
+                });
+
+            });
+        </script>
 
         @stack('scripts')
 

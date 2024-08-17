@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Repo;
 use App\Models\RepoHasProducts;
 use App\Models\Setting;
+use App\Models\User;
+use App\Notifications\LowProductQuantitiesNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -33,14 +35,19 @@ class CheckProductQuantities extends Command
     public function handle()
     {
         $alert = Setting::getGroup('alert');
+        $products = $this->findLowProducts();
 
         if ( $alert['email_enabled'] ) {
-            $this->sendEmail($this->findLowProducts());
+            $this->sendEmail($products);
         }
 
+        /*
         if ( $alert['sms_enabled']) {
-            $this->sendSms($this->findLowProducts());
+            $this->sendSms($products);
         }
+        */
+
+        $this->sendNotification($products);
     }
 
     public function findLowProducts()
@@ -71,6 +78,22 @@ class CheckProductQuantities extends Command
         }
 
         return $data;
+    }
+
+    private function sendNotification(?array $products = [])
+    {
+
+        if (empty($products)) {
+            return;
+        }
+
+        $superAdmin = User::role('Super Admin')->get();
+
+        foreach ($superAdmin as $admin) {
+            foreach ($products as $product) {
+                $admin->notify(new LowProductQuantitiesNotification($product));
+            }
+        }
     }
 
     private function sendEmail(?array $products = [])

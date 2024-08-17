@@ -22,4 +22,12 @@ class DashboardController extends Controller
     {
         return view('themes.backend.default.home');
     }
+
+    public function notifyReaded(Request $request)
+    {
+        if ( $request->notifyId ) {
+            $user = auth()->user();
+            $user->unreadNotifications->where('id', $request->notifyId)->markAsRead();
+        }
+    }
 }
