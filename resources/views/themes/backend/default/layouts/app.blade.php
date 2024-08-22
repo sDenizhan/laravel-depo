@@ -328,6 +328,28 @@
                                 </div>
                             </li>
 
+                            <li class="menu-item">
+                                <a href="#menuSettings" data-bs-toggle="collapse" class="menu-link">
+                                    <span class="menu-icon"><i data-feather="settings"></i></span>
+                                    <span class="menu-text"> {{ __('Settings')  }}</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="menuSettings">
+                                    <ul class="sub-menu">
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.alert-settings.index') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Alert Settings') }}</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="{{ route('admin.email-settings.index') }}" class="menu-link">
+                                                <span class="menu-text">{{ __('Email Settings') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
                         @endrole
 
                     </ul>

@@ -26,6 +26,7 @@ class UpdateRepoRequest extends FormRequest
             'name' => 'required|string',
             'is_main' => 'required|boolean',
             'min_alert' => 'required|integer',
+            'is_hospital' => 'required|boolean',
         ];
     }
 }

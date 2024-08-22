@@ -26,7 +26,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="email_enabled" name="email_enabled" value="1" {{ old('email_enabled', 1) ?? $settings['email_enabled'] ? 'checked' : '' }}>
+                            <input class="form-check-input" type="checkbox" id="email_enabled" name="email_enabled" value="1" {{ old('email_enabled') ?? $settings['email_enabled'] ? 'checked' : '' }}>
                             <label class="form-check-label" for="email_enabled">{{ __('Enable Email Notifications') }}</label>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="sms_enabled" name="sms_enabled" value="1" {{ old('sms_enabled', 1) ?? $settings['sms_enabled'] ? 'checked' : '' }}>
+                            <input class="form-check-input" type="checkbox" id="sms_enabled" name="sms_enabled" value="1" {{ $settings['sms_enabled'] == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="sms_enabled">{{ __('Enable SMS Notifications') }}</label>
                         </div>
                     </div>

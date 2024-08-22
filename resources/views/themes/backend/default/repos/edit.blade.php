@@ -57,19 +57,33 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="mb-3">
-                                <label for="user_id" class="form-label">{{ __('Manager') }}</label>
-                                <select name="user_id" id="user_id" class="form-control">
-                                    @php
-                                        foreach ($users as $user) {
-                                            $selected = $user->id == old('user_id') ?? $repo->user_id ? 'selected' : '';
-                                            echo '<option value="'. $user->id .'" '. $selected .'>'. join(' - ', [$user->name, $user->getRoleNames()->first()]) .'</option>';
-                                        }
-                                    @endphp
-                                </select>
-                                @error('status')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="user_id" class="form-label">{{ __('Manager') }}</label>
+                                    <select name="user_id" id="user_id" class="form-control">
+                                        @php
+                                            foreach ($users as $user) {
+                                                $selected = $user->id == old('user_id') ?? $repo->user_id ? 'selected' : '';
+                                                echo '<option value="'. $user->id .'" '. $selected .'>'. join(' - ', [$user->name, $user->getRoleNames()->first()]) .'</option>';
+                                            }
+                                        @endphp
+                                    </select>
+                                    @error('status')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="is_hospital" class="form-label">{{ __('Hospital ?') }}</label>
+                                    <select name="is_hospital" id="is_hospital" class="form-control">
+                                        <option value="1" {{ old('is_hospital') == 1 ? 'selected' : '' }}>{{ __('Yes') }}</option>
+                                        <option value="0" {{ old('is_hospital') == 0 ? 'selected' : '' }}>{{ __('No') }}</option>
+                                    </select>
+                                    @error('status')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="row">

@@ -37,6 +37,7 @@
                         <tr>
                             <th>{{ __('Name') }}</th>
                             <th>{{ __('Is Main?') }}</th>
+                            <th>{{ __('Is Hospital?') }}</th>
                             <th>{{ __('Min. Alert Count') }}</th>
                             <th>{{ __('Actions') }}</th>
                         </tr>
@@ -46,6 +47,7 @@
                             <tr>
                                 <td>{{ $repo->name }}</td>
                                 <td>{{ $repo->is_main ? __('Yes') : __('No') }}</td>
+                                <td>{{ $repo->is_hospital ? __('Yes') : __('No') }}</td>
                                 <td>{{ $repo->min_alert }}</td>
                                 <td>
                                     <a href="{{ route('admin.repos.show', $repo->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
