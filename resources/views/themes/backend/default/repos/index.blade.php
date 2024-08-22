@@ -19,10 +19,6 @@
 @section('content')
 <div class="row">
     <div class="col-12">
-        <div class="alert alert-info">
-            <h4 class="alert-heading">{{ __('Warning') }}</h4>
-            <p>{{ __('You can add just once Main Repo!') }}</p>
-        </div>
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-pills card-header-pills">

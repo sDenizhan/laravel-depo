@@ -77,8 +77,8 @@
                                 <div class="mb-3">
                                     <label for="is_hospital" class="form-label">{{ __('Hospital ?') }}</label>
                                     <select name="is_hospital" id="is_hospital" class="form-control">
-                                        <option value="1" {{ old('is_hospital') == 1 ? 'selected' : '' }}>{{ __('Yes') }}</option>
-                                        <option value="0" {{ old('is_hospital') == 0 ? 'selected' : '' }}>{{ __('No') }}</option>
+                                        <option value="1" {{ old('is_hospital') == '1' ? 'selected' : '' }}>{{ __('Yes') }}</option>
+                                        <option value="0" {{ old('is_hospital') == '0' ? 'selected' : '' }}>{{ __('No') }}</option>
                                     </select>
                                     @error('status')
                                     <div class="text-danger">{{ $message }}</div>
