@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\PrescriptionCreated;
 use App\Http\Controllers\Controller;
+use App\Models\Doctor;
 use App\Models\Prescription;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Repo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,8 +41,12 @@ class PrescriptionController extends Controller
     {
         $medicineCategory = ProductCategory::where(['use_for_prescription' => 1])->first();
         if ( $medicineCategory ) {
+
+            $doctors = Doctor::all();
+            $hospitals = Repo::where(['is_hospital' => 1])->get();
             $medicines = Product::where(['category_id' => $medicineCategory->id])->get();
-            return view('prescriptions.create', compact('medicines'));
+
+            return view('prescriptions.create', compact('medicines', 'doctors', 'hospitals'));
         } else {
             return redirect()->route('admin.prescriptions.index')->with('error', 'No medicine category found for prescription');
         }
@@ -57,6 +63,8 @@ class PrescriptionController extends Controller
             'dosage.*' => 'required|string',
             'note' => 'nullable|array',
             'note.*' => 'nullable|string',
+            'doctor_id' => 'required|integer',
+            'hospital_id' => 'required|integer',
         ]);
 
         if ( $validate->fails() ) {
@@ -68,6 +76,8 @@ class PrescriptionController extends Controller
             'user_id' => auth()->id(),
             'patient_name' => $input['patient_name'],
             'patient_birthday' => $input['patient_birthday'],
+            'doctor_id' => $input['doctor_id'],
+            'hospital_id' => $input['hospital_id']
         ]);
 
         foreach ($input['box'] as $productId => $box) {

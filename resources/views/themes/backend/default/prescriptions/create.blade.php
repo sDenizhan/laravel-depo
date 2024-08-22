@@ -53,13 +53,35 @@
                     @method('POST')
                     <div class="card-body">
                         <div class="row mt-2">
-                            <div class="col-6">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="doctor" class="form-label">{{ __('Doctor') }} <span class="required">*</span> </label>
+                                    <select name="doctor_id" class="form-control">
+                                        <option value="">{{ __('Select Doctor') }}</option>
+                                        @foreach($doctors as $doctor)
+                                            <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="hospital" class="form-label">{{ __('Hospital') }} <span class="required">*</span> </label>
+                                    <select name="hospital_id" class="form-control">
+                                        <option value="">{{ __('Select Hospital') }}</option>
+                                        @foreach($hospitals as $hospital)
+                                            <option value="{{ $hospital->id }}">{{ $hospital->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label for="name" class="form-label">{{ __('Patient Name') }} <span class="required">*</span> </label>
                                     <input type="text" name="patient_name" class="form-control" value="{{ old('patient_name') }}">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label for="birthday" class="form-label">{{ __('Birthday') }}</label>
                                     <input type="text" name="patient_birthday" class="form-control" value="{{ old('patient_birthday') }}">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\MyReposController;
 use App\Http\Controllers\Admin\PrescriptionController;
@@ -86,6 +87,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         'product-categories' => ProductCategoryController::class,
         'products' => ProductController::class,
         'requests' => RequestsController::class,
-        'prescriptions' => PrescriptionController::class
+        'prescriptions' => PrescriptionController::class,
+        'doctors' => DoctorController::class,
     ]);
 });

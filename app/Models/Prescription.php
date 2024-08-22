@@ -14,6 +14,11 @@ class Prescription extends Model
         'crated_at' => 'datetime',
     ];
 
+    public function doctor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Doctor::class, 'doctor_id', 'id');
+    }
+
     public function medicines(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(PrescriptionMedicines::class, 'prescription_id', 'id');
