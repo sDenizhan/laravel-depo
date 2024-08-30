@@ -37,13 +37,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(!is_null($repo->products))
-                            @foreach ($repo->products as $product)
+                        @if(!is_null($products))
+                            @foreach ($products as $product)
                                 <tr>
-                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->product->name }}</td>
                                     <td>{{ $product->quantity }}</td>
                                     <td>
-
+                                        <a href="" class="btn btn-primary btn-sm">{{ __('Edit') }}</a>
+                                        <a href="" class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
                                     </td>
                                 </tr>
                             @endforeach

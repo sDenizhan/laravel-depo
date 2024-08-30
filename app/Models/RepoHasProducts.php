@@ -16,4 +16,9 @@ class RepoHasProducts extends Model
     {
         return $this->belongsTo(Repo::class, 'repo_id', 'id');
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
 }

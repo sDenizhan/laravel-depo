@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Repo;
 use App\Models\Product;
+use App\Models\RepoHasProducts;
 use App\Models\RepoRequest;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class MyReposController extends Controller
     public function index()
     {
         $repo = Repo::where('user_id', auth()->id())->first();
-        return view('my-repos.index', compact('repo'));
+        $products = RepoHasProducts::where(['repo_id' => $repo->id])->get();
+
+        return view('my-repos.index', compact('repo', 'products'));
     }
 
     public function myRequests()
