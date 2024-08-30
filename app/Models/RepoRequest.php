@@ -33,7 +33,7 @@ class RepoRequest extends Model
 
     public function repo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Repo::class);
+        return $this->belongsTo(Repo::class, 'repo_id', 'id');
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

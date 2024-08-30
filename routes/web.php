@@ -62,6 +62,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('my-repo/new-request', [MyReposController::class, 'storeRequest'])->name('my-repo.store-request');
     Route::get('my-repo/request/{id}', [MyReposController::class, 'showRequest'])->name('my-repo.show-request');
 
+    //request
+    Route::post('requests/check', [RequestsController::class, 'check'])->name('requests.check-product-quantity');
     Route::post('requests/statusUpdate', [RequestsController::class, 'statusUpdate'])->name('requests.status-update');
 
     //prescription search

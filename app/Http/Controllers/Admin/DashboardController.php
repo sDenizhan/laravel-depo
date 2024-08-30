@@ -30,8 +30,14 @@ class DashboardController extends Controller
                         })->limit(10)->get();
 
         //logs
-        $logs = \App\Models\RepoLog::orderBy('id', 'desc')->limit(10)->get();
-
+        $logs = \App\Models\RepoLog::query()
+                                    ->when(auth()->user()->hasRole('Super Admin'), function ($query){
+                                        return $query;
+                                    })
+                                    ->when(!auth()->user()->hasRole('Super Admin'), function ($query){
+                                        return $query->where('user_id', auth()->id());
+                                    })
+                                    ->orderBy('id', 'desc')->limit(10)->get();
 
         return view('themes.backend.default.home', compact('prescriptions', 'logs'));
     }
@@ -43,4 +49,5 @@ class DashboardController extends Controller
             $user->unreadNotifications->where('id', $request->notifyId)->markAsRead();
         }
     }
+
 }

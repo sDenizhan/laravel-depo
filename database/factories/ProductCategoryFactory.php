@@ -17,7 +17,7 @@ class ProductCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->words(4, true),
             'use_for_prescription' => 0
         ];
     }
