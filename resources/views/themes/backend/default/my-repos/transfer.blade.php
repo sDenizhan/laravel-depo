@@ -4,8 +4,8 @@
     @php
         $data = [
             [
-                'title' => __('Inventory'),
-                'url' => route('admin.inventory.index')
+                'title' => __('Transfer'),
+                'url' => route('admin.my-repo.transfer.show')
             ],
             [
                 'title' => __('Index'),
@@ -17,6 +17,7 @@
 @endsection
 
 @section('content')
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -35,7 +36,7 @@
                                 <div class="form-group">
                                     <label for="query">{{ __('Product Search') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="query" id="query" class="form-control" value="{{ request()->get('barcode') ?? '' }}" placeholder="{{ __("Please Enter Product Name Or Product Barcode") }}">
+                                        <input type="text" name="query" id="query" class="form-control" value="" placeholder="{{ __("Please Enter Product Name Or Product Barcode") }}">
                                         <button class="btn input-group-btn btn-dark waves-effect waves-light open_camera" type="button">{{ __('Open Camera') }}</button>
                                     </div>
                                     <div class="search-result-box col-lg-12">
@@ -52,7 +53,7 @@
         </div>
     </div>
 
-    <form action="{{ route('admin.inventory.store') }}" method="post" id="inventoryForm">
+    <form action="{{ route('admin.my-repo.transfer-store') }}" method="post" id="inventoryForm">
         @csrf
         @method('POST')
         <div class="row">
@@ -84,31 +85,38 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row mt-2">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label for="repo_id">{{ __('Target Repo') }}</label>
-                                    <select name="repo_id" id="repo_id" class="form-control" data-placeholder="{{ __('Select Repo') }}">
-                                        @foreach($repos as $repo)
-                                            <option value="{{ $repo->id }}">{{ $repo->name }}</option>
+                                    <label for="hospital_id">{{ __('Hospital') }}</label>
+                                    <select name="hospital_id" id="hospital_id" class="form-control">
+                                        <option value="">{{ __('Select Hospital') }}</option>
+                                        @foreach($hospitals as $hospital)
+                                            <option value="{{ $hospital->id }}">{{ $hospital->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label for="person">{{ __('Person') }}</label>
-                                    <select name="user_id" id="user" class="form-control">
-                                        <option value="">{{ __('Select Person') }}</option>
-                                        @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <label for="doctor_id">{{ __('Doctor') }}</label>
+                                    <select name="doctor_id" id="doctor_id" class="form-control">
+                                        <option value="">{{ __('Select Doctor') }}</option>
+                                        @foreach($doctors as $doctor)
+                                            <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="repo_id">{{ __('Patient Name') }}</label>
+                                    <input type="text" name="patient_name" id="patient_name" class="form-control" />
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-lg-12">
-                                <label for="description" class="form-label">{{ __('Description') }} <span class="required">*</span> </label>
+                                <label for="description" class="form-label">{{ __('Description') }} </label>
                                 <textarea name="description" id="description" cols="30" rows="7" class="form-control" required></textarea>
                             </div>
                         </div>
@@ -198,7 +206,7 @@
                 var query = $(this).val();
                 if(query.length > 2){
                     $.ajax({
-                        url: "{{ route('admin.inventory.search') }}",
+                        url: "{{ route('admin.my-repo.search') }}",
                         type: "POST",
                         data: {
                             _token: "{{ csrf_token() }}",
@@ -208,10 +216,14 @@
                             if (response.status === 'success') {
                                 let html = '<div class="list-group">';
                                 $(response.data).each(function(index, product){
-                                    html += '<a href="javascript:void(0)" class="list-group-item list-group-item-action add-to-cart" data-name="'+product.name+'" data-id="'+product.id+'">'+product.name+'</a>';
+                                    console.log(product);
+                                    html += '<a href="javascript:void(0)" class="list-group-item list-group-item-action add-to-cart" data-quantity="'+ product.quantity +'" data-name="'+product.name+'" data-id="'+product.id+'">'+product.name+'</a>';
                                 });
                                 html += '</div>';
                                 $('.search-result-box').find('div').empty().css({'z-index': 9999}).fadeIn().html(html);
+                            } else {
+                                let html = '<div class="alert alert-danger">'+response.message+'</div>';
+                                $('.search-result-box').find('div').removeClass('bg-primary').addClass('mt-2').empty().html(html).fadeIn();
                             }
                         }
                     });
@@ -222,10 +234,11 @@
             $(document).on('click', 'a.add-to-cart', function(){
                 var id = $(this).data('id');
                 var name = $(this).data('name');
+                var quantity = $(this).data('quantity');
 
                 var html = '<tr>';
                 html += '<td>'+name+'</td>';
-                html += '<td><input type="number" name="products['+id+']" data-productId="'+id+'" class="form-control product_'+ id +'" value="1"></td>';
+                html += '<td><input type="number" name="products['+id+']" min="1" max="'+ quantity +'" data-productId="'+id+'" data-quantity="'+ quantity +'" class="form-control product_'+ id +'" value="1"></td>';
                 html += '<td><a href="#" class="btn btn-danger remove-from-cart" data-id="'+id+'"><i class="fas fa-trash-alt"></i></a></td>';
                 html += '</tr>';
 

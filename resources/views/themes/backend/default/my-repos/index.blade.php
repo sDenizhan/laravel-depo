@@ -17,48 +17,58 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <ul class="nav nav-pills card-header-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('admin.my-repo.new-request') }}">{{ __('New Request') }}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <table id="basic-datatable" class="table dt-responsive nowrap w-100">
-                        <thead>
-                        <tr>
-                            <th>{{ __('Name') }}</th>
-                            <th>{{ __('Quantity') }}</th>
-                            <th>{{ __('Actions') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(!is_null($products))
-                            @foreach ($products as $product)
-                                <tr>
-                                    <td>{{ $product->product->name }}</td>
-                                    <td>{{ $product->quantity }}</td>
-                                    <td>
-                                        <a href="" class="btn btn-primary btn-sm">{{ __('Edit') }}</a>
-                                        <a href="" class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
+
+    @if( $repo == null )
+        <div class="alert alert-danger" role="alert">
+            {{ __('No repo has been authorized to the side. Please contact your administrator.') }}
+        </div>
+    @else
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-pills card-header-pills">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{{ route('admin.my-repo.new-request') }}">{{ __('New Request') }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                            <thead>
                             <tr>
-                                <td colspan="3">{{ __('No data found') }}</td>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Quantity') }}</th>
+                                <th>{{ __('Barcode') }}</th>
+                                <th>{{ __('Actions') }}</th>
                             </tr>
-                        @endif
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @if(!is_null($products))
+                                @foreach ($products as $product)
+                                    <tr>
+                                        <td>{{ $product->product->name }}</td>
+                                        <td>{{ $product->quantity }}</td>
+                                        <td>{{ $product->product->barcode }}</td>
+                                        <td>
+                                            <a href="" class="btn btn-primary btn-sm">{{ __('Edit') }}</a>
+                                            <a href="" class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="3">{{ __('No data found') }}</td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    @endif
 @endsection
 
 @push('styles')

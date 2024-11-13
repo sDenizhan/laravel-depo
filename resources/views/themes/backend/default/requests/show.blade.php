@@ -54,14 +54,45 @@
                             $products = App\Models\Product::whereIn('id', $productIds)->get()->keyBy('id');
                         @endphp
 
-                        @if (!empty($request->data) )
+                        @if (!empty($request->data))
+                            <div class="row mb-3">
+                                <div class="col-md-1">
+                                    <strong>{{ __('ID') }}</strong>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>{{ __('Name') }}</strong>
+                                </div>
+                                <div class="col-md-1">
+                                    <strong>{{ __('Barcode') }}</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <strong>{{ __('Quantity') }}</strong>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <strong>{{ __('Repository') }}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             @foreach($request->data as $requestData)
                                 @php($product = $products->get($requestData['product_id']))
                                 <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        {{ $product->name }}
+                                    <div class="col-md-1">
+                                        {{ '#'.$product->id }}
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-3">
+                                        <a href="{{ route('admin.products.show', ['product' => $product->id]) }}" target="_blank">
+                                            {{ $product->name }}
+                                        </a>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a href="{{ route('admin.inventory.index', ['barcode' => $product->barcode])  }}" target="_blank">
+                                            {{ $product->barcode }}
+                                        </a>
+                                    </div>
+                                    <div class="col-md-7">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <input type="text" class="form-control" name="quantity[{{$product->id}}]" id="quantity_{{ $product->id }}" value="{{ $requestData['quantity'] }}">
@@ -70,7 +101,9 @@
                                                 <select name="repo[{{ $product->id }}]" id="repo_id" class="form-control">
                                                     <option value="0">{{ __('Select Repository') }}</option>
                                                     @forelse($repos as $repo)
-                                                        <option value="{{ $repo->id }}">{{ $repo->name }}</option>
+                                                        @if ( $repo->id != $request->repo_id )
+                                                            <option value="{{ $repo->id }}">{{ $repo->name }}</option>
+                                                        @endif
                                                     @empty
                                                         <option value="">{{ __('No repository found') }}</option>
                                                     @endforelse

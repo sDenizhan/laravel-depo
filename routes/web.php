@@ -61,6 +61,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('my-repo/new-request', [MyReposController::class, 'newRequest'])->name('my-repo.new-request');
     Route::post('my-repo/new-request', [MyReposController::class, 'storeRequest'])->name('my-repo.store-request');
     Route::get('my-repo/request/{id}', [MyReposController::class, 'showRequest'])->name('my-repo.show-request');
+    Route::get('my-repo/transfer/', [MyReposController::class, 'transfer'])->name('my-repo.transfer.show');
+    Route::post('my-repo/transfer/', [MyReposController::class, 'transferStore'])->name('my-repo.transfer-store');
+    Route::post('my-repo/search', [MyReposController::class, 'search'])->name('my-repo.search');
 
     //request
     Route::post('requests/check', [RequestsController::class, 'check'])->name('requests.check-product-quantity');
