@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\LogInventoryAdded;
+use App\Events\ManagerLogEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use App\Models\Hospital;
@@ -50,8 +52,6 @@ class MyReposController extends Controller
         $patientName = $request->post('patient_name');
         $description = $request->post('description');
 
-        //dd($request->all());
-
         //user repo check
         $repo = Repo::where('user_id', auth()->id())->first();
 
@@ -74,10 +74,30 @@ class MyReposController extends Controller
         }
 
         $products = collect($products)->mapWithKeys(function ($quantity, $productId) {
-            return [$productId => ['quantity' => $quantity]];
+            return [$productId => $quantity];
         });
 
-        dd($products);
+        //update repo products
+        $productsCheck->each(function ($product) use ($products) {
+            $product->quantity = $product->quantity - $products[$product->product_id];
+            $product->save();
+        });
+
+        //event
+        event(new ManagerLogEvent([
+            'action' => 'transfer_products',
+            'data' => [
+                'products' => $products,
+                'hospital_id' => $hospitalId,
+                'doctor_id' => $doctorId,
+                'patient_name' => $patientName,
+                'description' => $description,
+                'repo_id' => $repo->id,
+                'user_id' => auth()->id(),
+            ]
+        ]));
+
+        return redirect()->back()->with('success', 'Products transferred successfully');
     }
 
     public function search(Request $request)
@@ -100,7 +120,8 @@ class MyReposController extends Controller
 
         $query = $validated['query'];
 
-        $product = DB::table('repo_has_products')->select('products.*', 'repo_has_products.quantity')
+        $product = DB::table('repo_has_products')
+            ->select('products.*', 'repo_has_products.quantity')
             ->join('products', 'repo_has_products.product_id', '=', 'products.id')
             ->where('repo_has_products.repo_id', $repo->id)
             ->where(function (Builder $q) use ($query) {

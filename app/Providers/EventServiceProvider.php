@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\LogInventoryAdded;
+use App\Events\ManagerLogEvent;
 use App\Events\PrescriptionCreated;
 use App\Listeners\ListenerLogInventoryAdded;
+use App\Listeners\ManagerLogListener;
 use App\Listeners\PrescriptionCreatedListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        ManagerLogEvent::class => [
+            ManagerLogListener::class
+        ]
     ];
 
     /**

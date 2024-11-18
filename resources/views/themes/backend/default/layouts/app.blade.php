@@ -33,7 +33,7 @@
             <div class="app-menu">
 
                 <!-- Brand Logo -->
-                <div class="logo-box">
+                <div class="logo-box" style="background: #ffffff">
                     <!-- Brand Logo Light -->
                     <a href="{{ route('admin.dashboard') }}" class="logo-light">
                         <img src="{{ asset('logos/logo-white.png')}}" alt="logo" class="logo-lg" style="height: 50px !important;">
