@@ -119,12 +119,17 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::find($id);
-        if ($product) {
-            $product->delete();
-            return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
+        //ajax destroy request
+        if (request()->ajax()) {
+            $product = Product::find($id);
+            if ($product) {
+                $product->delete();
+                return response()->json(['success' => 'Product deleted successfully']);
+            } else {
+                return response()->json(['error' => 'Product not found']);
+            }
         } else {
-            return redirect()->route('admin.products.index')->with('error', 'Product not found');
+            return redirect()->route('admin.products.index')->with('error', 'Invalid request');
         }
     }
 }
