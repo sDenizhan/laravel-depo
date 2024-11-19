@@ -102,4 +102,25 @@
 
     <!-- Datatables init -->
     <script src=" {{ asset('themes/backend/default/assets/js/pages/datatables.init.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.remove_product').on('click', function(e){
+                e.preventDefault();
+                var url = $(this).attr('href');
+                var token = "{{ csrf_token() }}";
+                var tr = $(this).closest('tr');
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        _token: token
+                    },
+                    success: function(response){
+                        tr.remove();
+                    }
+                });
+            });
+        });
+    </script>
 @endpush
