@@ -119,6 +119,12 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            $product->delete();
+            return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
+        } else {
+            return redirect()->route('admin.products.index')->with('error', 'Product not found');
+        }
     }
 }
