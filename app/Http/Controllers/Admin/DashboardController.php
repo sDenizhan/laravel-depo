@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Prescription;
+use App\Models\Repo;
+use App\Models\RepoHasProducts;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -38,6 +40,10 @@ class DashboardController extends Controller
                                         return $query->where('user_id', auth()->id());
                                     })
                                     ->orderBy('id', 'desc')->limit(10)->get();
+
+        //hastaneler
+        $hospitals = Repo::where('is_hospital', 1)->get();
+        //$products = RepoHasProducts::whereIn('repo_id', $hospitals->pluck('id'))->get();
 
         return view('themes.backend.default.home', compact('prescriptions', 'logs'));
     }
