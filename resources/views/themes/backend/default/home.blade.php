@@ -130,12 +130,18 @@
     <script>
         $(document).ready(function (){
             var options = {
-                series: [44, 55, 13, 43, 22],
+                series: [{{ implode(',', $mainRepoData) }}],
                 chart: {
-                    width: 510,
+                    width: 690,
                     type: 'pie',
                 },
-                labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+                labels: '{{ implode(',', $mainRepoCategories) }}'.split(','),
+                dataLabels : {
+                    enabled: true,
+                    formatter: function (val, opts) {
+                        return opts.w.config.series[opts.seriesIndex]+" Adet";
+                    },
+                },
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -154,19 +160,7 @@
 
 
             var options = {
-                series: [{
-                    name: 'PRODUCT A',
-                    data: [44, 55, 41, 67, 22, 43]
-                }, {
-                    name: 'PRODUCT B',
-                    data: [13, 23, 20, 8, 13, 27]
-                }, {
-                    name: 'PRODUCT C',
-                    data: [11, 17, 15, 15, 21, 14]
-                }, {
-                    name: 'PRODUCT D',
-                    data: [21, 7, 25, 13, 22, 8]
-                }],
+                series: {!! $data !!},
                 chart: {
                     type: 'bar',
                     height: 350,
@@ -207,7 +201,7 @@
                 },
                 xaxis: {
                     type: 'string',
-                    categories: ['hospital repo 1', 'hospital repo 2', 'hospital repo 3', 'hospital repo 4', 'hospital repo 5', 'hospital repo 6'],
+                    categories: '{{ $hospitals->pluck('name')->implode(",") }}'.split(','),
                 },
                 legend: {
                     position: 'right',
